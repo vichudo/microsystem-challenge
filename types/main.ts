@@ -5,8 +5,8 @@ export type LayoutProps = {
   sidebarOpen: boolean;
   setSidebarOpen: Dispatch<SetStateAction<boolean>>;
   current: string | undefined;
-  data_characters?: Character[] | null;
-  data_episodes?: Episode[] | null;
+  data_characters?: { [key: string]: Character[] };
+  data_episodes?: { [key: string]: Episode[] };
 };
 
 export type Character = {
@@ -40,11 +40,17 @@ export type Episode = {
 };
 
 export type DisplayEpisodesType = {
-  data: Episode[];
+  data: { [key: string]: Episode[] };
   search: string | null | undefined;
+  page?: string | number;
 };
 
 export type DisplayCharactersType = {
-  data: Character[];
+  data: { [key: string]: Character[] };
   search: string | null | undefined;
+  page?: string | number;
+};
+
+type PaginatedCharacters = {
+  [key: number | string]: Character[];
 };

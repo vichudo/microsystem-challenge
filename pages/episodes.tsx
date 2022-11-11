@@ -5,7 +5,7 @@ import { GetStaticProps, InferGetServerSidePropsType, NextPage } from "next";
 
 const Episodes: NextPage<
   InferGetServerSidePropsType<typeof getStaticProps>
-> = () => {
+> = ({ data }) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   return (
@@ -13,13 +13,36 @@ const Episodes: NextPage<
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen}
       current={"/episodes"}
+      data_episodes={data}
     />
   );
 };
 
-export const getStaticProps: GetStaticProps = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const data = await fetch("https://rickandmortyapi.com/api/episode").then(
+    (res) => res.json()
+  );
+  //   console.log(data);
+
+  const pages = await data.info?.pages;
+  let pagesArray = [];
+
+  for (let i = 1; i <= pages; i++) {
+    pagesArray.push(i);
+  }
+
+  const data_ = await Promise.all(
+    pagesArray.map(
+      async (i: number) =>
+        await fetch(`https://rickandmortyapi.com/api/episode?page=${i}`).then(
+          (res) => res.json()
+        )
+    )
+  );
+
+  const final_data = { ...data_.map(({ results }) => [...results]) };
   return {
-    props: {},
+    props: { data: final_data },
   };
 };
 

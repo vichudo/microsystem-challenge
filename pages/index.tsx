@@ -8,6 +8,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
+  // console.log(data);
   return (
     <div className="">
       <Head>
@@ -18,6 +19,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         current={"/"}
+        data_characters={data}
       />
     </div>
   );
@@ -46,7 +48,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const final_data = { ...data_.map(({ results }) => [...results]) };
 
-  console.log(final_data);
+  // console.log(final_data);
 
   return {
     props: { data: final_data },

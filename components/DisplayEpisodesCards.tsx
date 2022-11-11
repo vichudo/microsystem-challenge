@@ -1,20 +1,26 @@
 import React from "react";
-import { Character, DisplayEpisodesType, Episode } from "../types/main";
-import { FC } from "react";
+import { Episode, DisplayEpisodesType } from "../types/main";
 import EpisodeCard from "./EpisodeCard";
+import { FC } from "react";
 
-const DisplayEpisodesCards: FC<DisplayEpisodesType> = ({ data, search }) => {
+const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({
+  data,
+  search,
+  page = 1,
+}) => {
+  console.log(data);
   return (
-    <div>
-      {data
-        ?.filter(({ name }) =>
-          name.toLowerCase().includes(search?.toLowerCase() as string)
-        )
-        .map((i, index) => (
-          <EpisodeCard key={index} data={i} />
-        ))}
+    <div className="flex flex-wrap gap-4">
+      {search
+        ? Object.values(data)
+            .flat()
+            .filter(({ name }) =>
+              search ? name.toLowerCase().includes(search.toLowerCase()) : name
+            )
+            .map((i, index) => <EpisodeCard key={index} data={i} />)
+        : data[page].map((i, index) => <EpisodeCard key={index} data={i} />)}
     </div>
   );
 };
 
-export default DisplayEpisodesCards;
+export default DisplayEpisodeCards;

@@ -16,6 +16,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 import { LayoutProps } from "../types/main";
+import { useRouter } from "next/router";
 
 export default function Layout({
   sidebarOpen,
@@ -46,7 +47,7 @@ export default function Layout({
   ]);
 
   const [search, setSearch] = useState<string>();
-  console.log(search);
+  //   console.log(search);
 
   return (
     <>
@@ -235,14 +236,14 @@ export default function Layout({
                   <div className="py-4">
                     {data_characters && (
                       <DisplayCharacterCards
-                        data={data_characters}
                         search={search}
+                        data={data_characters}
                       />
                     )}
                     {data_episodes && (
                       <DisplayEpisodesCards
-                        data={data_episodes}
                         search={search}
+                        data={data_episodes}
                       />
                     )}
                   </div>
