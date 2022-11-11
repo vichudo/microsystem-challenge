@@ -10,7 +10,7 @@ import {
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import DisplayCharacterCards from "./DisplayCharacterCards";
-import DisplayEpisodesCards from "./DisplaEpisodesCards";
+import DisplayEpisodesCards from "./DisplayEpisodesCards";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -44,6 +44,9 @@ export default function Layout({
       current: current === "/favorites" ? true : false,
     },
   ]);
+
+  const [search, setSearch] = useState<string>();
+  console.log(search);
 
   return (
     <>
@@ -209,6 +212,7 @@ export default function Layout({
                         />
                       </div>
                       <input
+                        onChange={(e) => setSearch((prev) => e.target.value)}
                         id="search-field"
                         className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                         placeholder="Search"
@@ -230,10 +234,16 @@ export default function Layout({
                   {/* Replace with your content */}
                   <div className="py-4">
                     {data_characters && (
-                      <DisplayCharacterCards data={data_characters} />
+                      <DisplayCharacterCards
+                        data={data_characters}
+                        search={search}
+                      />
                     )}
                     {data_episodes && (
-                      <DisplayEpisodesCards data={data_episodes} />
+                      <DisplayEpisodesCards
+                        data={data_episodes}
+                        search={search}
+                      />
                     )}
                   </div>
                   {/* /End replace */}

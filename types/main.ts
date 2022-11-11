@@ -38,3 +38,13 @@ export type Episode = {
   url: string;
   created: Date;
 };
+
+export type DisplayEpisodesType = {
+  data: Episode[];
+  search: string | null | undefined;
+};
+
+export type DisplayCharactersType = {
+  data: Character[];
+  search: string | null | undefined;
+};

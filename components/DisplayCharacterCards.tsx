@@ -1,14 +1,18 @@
 import React from "react";
-import { Character, Episode } from "../types/main";
+import { Character, DisplayCharactersType, Episode } from "../types/main";
 import CharacterCard from "./CharacterCard";
 import { FC } from "react";
 
-const DisplayCharacterCards: FC<{ data: Episode[] }> = ({ data }) => {
+const DisplayCharacterCards: FC<DisplayCharactersType> = ({ data, search }) => {
   return (
     <div>
-      {data?.map(({ id }) => (
-        <CharacterCard key={id} />
-      ))}
+      {data
+        ?.filter(({ name }) =>
+          name.toLowerCase().includes(search?.toLowerCase() as string)
+        )
+        .map((i, index) => (
+          <CharacterCard key={index} data={i} />
+        ))}
     </div>
   );
 };
