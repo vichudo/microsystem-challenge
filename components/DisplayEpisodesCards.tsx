@@ -1,24 +1,57 @@
 import React from "react";
 import { Episode, DisplayEpisodesType } from "../types/main";
 import EpisodeCard from "./EpisodeCard";
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
+import type { ParsedUrlQuery } from "querystring";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({
-  data,
-  search,
-  page = 1,
-}) => {
-  console.log(data);
+const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({ data, search }) => {
+  const router = useRouter();
+  const { page }: ParsedUrlQuery = router.query;
+  const [pageNumber, setPageNumber] = useState<string | number>("1");
+
+  let lastPage = parseInt(Object.keys(data).slice(-1)[0]);
+
+  useEffect(() => {
+    if (page) {
+      setPageNumber(page as string);
+    }
+  }, [router]);
+
   return (
-    <div className="flex flex-wrap gap-4">
-      {search
-        ? Object.values(data)
-            .flat()
-            .filter(({ name }) =>
-              search ? name.toLowerCase().includes(search.toLowerCase()) : name
-            )
-            .map((i, index) => <EpisodeCard key={index} data={i} />)
-        : data[page].map((i, index) => <EpisodeCard key={index} data={i} />)}
+    <div>
+      <div className="flex flex-wrap justify-center gap-4">
+        {search
+          ? Object.values(data)
+              .flat()
+              .filter(({ name }) =>
+                search
+                  ? name.toLowerCase().includes(search.toLowerCase())
+                  : name
+              )
+              .map((i, index) => <EpisodeCard key={index} data={i} />)
+          : data[pageNumber].map((i, index) => (
+              <EpisodeCard key={index} data={i} />
+            ))}
+      </div>
+      <div className="flex justify-center mt-2 gap-3">
+        {parseInt(page as string) > 1 && (
+          <div>
+            <Link href={`/episodes?page=${parseInt(pageNumber as string) - 1}`}>
+              <button>Prev page</button>
+            </Link>
+          </div>
+        )}
+
+        {router.pathname === "/episodes" && pageNumber < lastPage && (
+          <div>
+            <Link href={`/episodes?page=${parseInt(pageNumber as string) + 1}`}>
+              <button>Next page</button>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
