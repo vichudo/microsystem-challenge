@@ -47,7 +47,6 @@ export default function Layout({
   ]);
 
   const [search, setSearch] = useState<string>();
-  //   console.log(search);
 
   return (
     <>
