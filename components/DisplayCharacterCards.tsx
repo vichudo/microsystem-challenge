@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Character, DisplayCharactersType, Episode } from "../types/main";
+import { DisplayCharactersType } from "../types/main";
 import CharacterCard from "./CharacterCard";
 import { FC } from "react";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
@@ -33,7 +32,7 @@ const DisplayCharacterCards: FC<DisplayCharactersType> = ({ data, search }) => {
               )
               .map((i, index) => <CharacterCard key={index} data={i} />)
           : data[pageNumber].map((i, index) => (
-              <CharacterCard key={index} data={i} />
+              <CharacterCard key={i.id} data={i} />
             ))}
       </div>
 
