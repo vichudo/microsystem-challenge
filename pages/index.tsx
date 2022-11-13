@@ -8,12 +8,11 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
-  // console.log(data);
   return (
     <div className="">
       <Head>
         <title>Rick & Morty's Directory</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/rickmorty.ico" />
       </Head>
       <Layout
         sidebarOpen={sidebarOpen}

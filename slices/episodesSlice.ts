@@ -4,8 +4,8 @@ const initialState = {
   items: [],
 };
 
-export const favsSlice = createSlice({
-  name: "favorites",
+export const favsSliceEpisodes = createSlice({
+  name: "episodes",
   initialState,
   reducers: {
     //actions
@@ -30,9 +30,10 @@ export const favsSlice = createSlice({
 });
 
 //Exporting actions (will allow us to dispatch actions)
-export const { addToFavorites, removeFromFavorites } = favsSlice.actions;
+export const { addToFavorites, removeFromFavorites } =
+  favsSliceEpisodes.actions;
 
-//Selectors - We pull information from the global store slice
-export const selectItems = (state: any) => state.favorites.items;
+//Selectors - How we pull information from the global store slice
+export const selectItems = (state: any) => state.episodes.items;
 
-export default favsSlice.reducer;
+export default favsSliceEpisodes.reducer;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Episode, DisplayEpisodesType } from "../types/main";
+import { DisplayEpisodesType } from "../types/main";
 import EpisodeCard from "./EpisodeCard";
 import { FC, useState, useEffect } from "react";
 import type { ParsedUrlQuery } from "querystring";
@@ -11,7 +11,9 @@ const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({ data, search }) => {
   const { page }: ParsedUrlQuery = router.query;
   const [pageNumber, setPageNumber] = useState<string | number>("1");
 
-  let lastPage = parseInt(Object.keys(data).slice(-1)[0]);
+  let lastPage = parseInt(Object.keys(data).slice(-1)[0]) + 1;
+
+  console.log(lastPage);
 
   useEffect(() => {
     if (page) {
@@ -31,13 +33,13 @@ const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({ data, search }) => {
                   : name
               )
               .map((i, index) => <EpisodeCard key={index} data={i} />)
-          : data[pageNumber].map((i, index) => (
-              <EpisodeCard key={index} data={i} />
+          : data[parseInt(pageNumber as string) - 1].map((i) => (
+              <EpisodeCard key={i.id} data={i} />
             ))}
       </div>
       <div className="flex justify-center mt-2 gap-3">
         {parseInt(page as string) > 1 && (
-          <div>
+          <div className="mt-5">
             <Link href={`/episodes?page=${parseInt(pageNumber as string) - 1}`}>
               <button>Prev page</button>
             </Link>
@@ -45,7 +47,7 @@ const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({ data, search }) => {
         )}
 
         {router.pathname === "/episodes" && pageNumber < lastPage && (
-          <div>
+          <div className="mt-5">
             <Link href={`/episodes?page=${parseInt(pageNumber as string) + 1}`}>
               <button>Next page</button>
             </Link>
