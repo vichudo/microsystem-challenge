@@ -16,7 +16,6 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 import { LayoutProps } from "../types/main";
-import { useRouter } from "next/router";
 
 export default function Layout({
   sidebarOpen,
@@ -139,16 +138,12 @@ export default function Layout({
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
-              <div className="w-14 flex-shrink-0">
-                {/* Dummy element to force sidebar to shrink to fit close icon */}
-              </div>
+              <div className="w-14 flex-shrink-0"></div>
             </div>
           </Dialog>
         </Transition.Root>
 
-        {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
             <div className="flex flex-shrink-0 items-center px-4">
               <img
@@ -231,7 +226,6 @@ export default function Layout({
                   <h1 className="text-2xl font-semibold text-gray-900"></h1>
                 </div>
                 <div className="px-4 sm:px-6 md:px-0">
-                  {/* Replace with your content */}
                   <div className="py-4">
                     {data_characters && (
                       <DisplayCharacterCards
@@ -246,7 +240,6 @@ export default function Layout({
                       />
                     )}
                   </div>
-                  {/* /End replace */}
                 </div>
               </div>
             </main>

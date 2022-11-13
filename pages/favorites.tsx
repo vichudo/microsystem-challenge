@@ -3,14 +3,12 @@ import React from "react";
 import Layout from "../components/Layout";
 import { useState } from "react";
 import type { Character } from "../types/main";
-
 import { useSelector } from "react-redux";
 import { selectItems } from "../slices/favSlice";
 import CharacterCard from "../components/CharacterCard";
 
 const Favorites: NextPage = () => {
   const favs = useSelector(selectItems);
-
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   return (
@@ -20,7 +18,7 @@ const Favorites: NextPage = () => {
         setSidebarOpen={setSidebarOpen}
         current={"/favorites"}
       />
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="flex flex-wrap gap-3  justify-center items-center md:ml-56 lg:ml-64">
         {favs?.map((i: Character) => (
           <CharacterCard key={i.id} data={i} />
         ))}
