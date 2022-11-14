@@ -47,8 +47,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const final_data = { ...data_.map(({ results }) => [...results]) };
 
-  // console.log(final_data);
-
   return {
     props: { data: final_data },
   };

@@ -2,11 +2,11 @@ import React, { FC, useState } from "react";
 import { Episode } from "../types/main";
 import { useDispatch, useSelector } from "react-redux";
 import { selectItems } from "../slices/episodesSlice";
-import { addToFavorites } from "../slices/episodesSlice";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSelected } from "@heroicons/react/20/solid";
-import { removeFromFavorites } from "../slices/episodesSlice";
+import { addToFavorites, removeFromFavorites } from "../slices/episodesSlice";
 import { Toaster, toast } from "react-hot-toast";
+import Link from "next/link";
 
 const CharacterCard: FC<{ data: Episode }> = ({ data }) => {
   const dispatch = useDispatch();
@@ -35,17 +35,19 @@ const CharacterCard: FC<{ data: Episode }> = ({ data }) => {
   return (
     <>
       <Toaster />
-      <div className="bg-green-700 rounded-md h-fit w-48 p-2 flex gap-2 text-white font-bold">
-        {" "}
-        <button onClick={() => addItemToFavorites(data)}>
-          {isFav ? (
-            <HeartSelected className="w-4" />
-          ) : (
-            <HeartIcon className="w-4 " />
-          )}
-        </button>
-        {data?.name}
-      </div>
+      <Link href={`/episode/${data.id}`}>
+        <div className="bg-green-700 rounded-md h-fit w-48 p-2 flex gap-2 text-white font-bold">
+          {" "}
+          <button onClick={() => addItemToFavorites(data)}>
+            {isFav ? (
+              <HeartSelected className="w-4" />
+            ) : (
+              <HeartIcon className="w-4 " />
+            )}
+          </button>
+          {data?.name}
+        </div>
+      </Link>
     </>
   );
 };

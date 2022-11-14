@@ -22,7 +22,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const data = await fetch("https://rickandmortyapi.com/api/episode").then(
     (res) => res.json()
   );
-  //   console.log(data);
 
   const pages = await data.info?.pages;
   let pagesArray = [];

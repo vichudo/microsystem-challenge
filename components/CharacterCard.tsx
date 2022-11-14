@@ -7,6 +7,7 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSelected } from "@heroicons/react/20/solid";
 import { removeFromFavorites } from "../slices/favSlice";
 import { Toaster, toast } from "react-hot-toast";
+import Link from "next/link";
 
 const CharacterCard: FC<{ data: Character }> = ({ data }) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const CharacterCard: FC<{ data: Character }> = ({ data }) => {
   return (
     <>
       <Toaster />
+
       <div className="bg-indigo-500 rounded-md h-fit w-48 p-2 flex gap-2 text-white font-bold">
         {" "}
         <button onClick={() => addItemToFavorites(data)}>
@@ -44,7 +46,7 @@ const CharacterCard: FC<{ data: Character }> = ({ data }) => {
             <HeartIcon className="w-4 " />
           )}
         </button>
-        {data?.name}
+        <Link href={`/character/${data.id}`}>{data?.name}</Link>
       </div>
     </>
   );

@@ -13,8 +13,6 @@ const DisplayEpisodeCards: FC<DisplayEpisodesType> = ({ data, search }) => {
 
   let lastPage = parseInt(Object.keys(data).slice(-1)[0]) + 1;
 
-  console.log(lastPage);
-
   useEffect(() => {
     if (page) {
       setPageNumber(page as string);
