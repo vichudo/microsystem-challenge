@@ -81,7 +81,14 @@ const Index: NextPage<{ data: Episode; characters?: string[] }> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=259200, stale-while-revalidate=432000"
+  );
   const data = await fetch(
     `https://rickandmortyapi.com/api/episode/${params?.id}`
   ).then((res) => res.json());
