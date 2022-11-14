@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { Episode } from "../../types/main";
 import { useDispatch, useSelector } from "react-redux";
-import { selectItems } from "../../slices/favSlice";
+import { selectItems } from "../../slices/episodesSlice";
 import { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSelected } from "@heroicons/react/20/solid";
