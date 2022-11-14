@@ -1,7 +1,7 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import Image from "next/image";
-import { Character, Episode } from "../../types/main";
+import { Character } from "../../types/main";
 import { useDispatch, useSelector } from "react-redux";
 import { selectItems } from "../../slices/favSlice";
 import { useState } from "react";
@@ -90,10 +90,10 @@ const Index: NextPage<{ data: Character; episodes?: string[] }> = ({
               <span className="font-bold">Location :</span>{" "}
               {data.location.name || "unknown"}
             </li>
-            {/* <li className="bg-black rounded-md overflow-auto h-64 mt-2 p-2">
+            <li className="bg-indigo-900 rounded-md overflow-auto h-fit max-h-64 mt-2 p-2">
               <span className="font-bold overflow-auto">Episodes:</span>{" "}
               {episodes?.join(", ")}
-            </li> */}
+            </li>
           </ul>
         </div>
       </div>
@@ -101,56 +101,29 @@ const Index: NextPage<{ data: Character; episodes?: string[] }> = ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=259200, stale-while-revalidate=432000"
+  );
   const data = await fetch(
     `https://rickandmortyapi.com/api/character/${params?.id}`
   ).then((res) => res.json());
 
-  //This feature is commented because of rate limit API
-  // const episodes = await Promise.all(
-  //   data?.episode?.map(async (i: string) => {
-  //     return await fetch(i).then((res) => res.json());
-  //   })
-  // );
+  const episodes = await Promise.all(
+    data?.episode?.map(async (i: string) => {
+      return await fetch(i).then((res) => res.json());
+    })
+  );
 
   return {
     props: {
       data: data,
-      /* episodes: episodes.map(({name}) => name) */
+      episodes: episodes?.map(({ name }) => name),
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetch("https://rickandmortyapi.com/api/character").then(
-    (res) => res.json()
-  );
-
-  const pages = await data.info?.pages;
-  let pagesArray = [];
-
-  for (let i = 1; i <= pages; i++) {
-    pagesArray.push(i);
-  }
-
-  const data_ = await Promise.all(
-    pagesArray.map(
-      async (i: number) =>
-        await fetch(`https://rickandmortyapi.com/api/character?page=${i}`).then(
-          (res) => res.json()
-        )
-    )
-  );
-
-  const final_data = { ...data_.map(({ results }) => [...results]) };
-
-  const paths = Object.values(final_data)
-    .flat()
-    .map(({ id }) => ({ params: { id: `${id}` } }));
-
-  return {
-    paths,
-    fallback: true,
   };
 };
 

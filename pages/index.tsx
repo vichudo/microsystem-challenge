@@ -14,6 +14,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <title>Rick & Morty's Directory</title>
         <link rel="icon" href="/rickmorty.ico" />
       </Head>
+
       <Layout
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
