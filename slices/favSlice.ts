@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Character } from "../types/main";
 
 const initialState = {
   items: [],
@@ -9,12 +10,15 @@ export const favsSlice = createSlice({
   initialState,
   reducers: {
     //actions
-    addToFavorites: (state: any, action: any) => {
+    addCharacterToFavorites: (state: any, action: PayloadAction<Character>) => {
       state.items = [...state.items, action.payload];
     },
-    removeFromFavorites: (state: any, action: any) => {
+    removeCharacterFromFavorites: (
+      state: any,
+      action: PayloadAction<Character>
+    ) => {
       const index = state.items.findIndex(
-        (favItem: any) => favItem.id === action.payload.id
+        (favItem: Character) => favItem.id === action.payload.id
       );
       let newFavs = [...state.items];
 
@@ -30,7 +34,8 @@ export const favsSlice = createSlice({
 });
 
 //Exporting actions (will allow us to dispatch actions)
-export const { addToFavorites, removeFromFavorites } = favsSlice.actions;
+export const { addCharacterToFavorites, removeCharacterFromFavorites } =
+  favsSlice.actions;
 
 //Selectors - We pull information from the global store slice
 export const selectItems = (state: any) => state.favorites.items;

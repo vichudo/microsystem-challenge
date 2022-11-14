@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Episode } from "../types/main";
 
 const initialState = {
   items: [],
@@ -9,12 +10,15 @@ export const favsSliceEpisodes = createSlice({
   initialState,
   reducers: {
     //actions
-    addToFavorites: (state: any, action: any) => {
+    addEpisodeToFavorites: (state: any, action: PayloadAction<Episode>) => {
       state.items = [...state.items, action.payload];
     },
-    removeFromFavorites: (state: any, action: any) => {
+    removeEpisodeFromFavorites: (
+      state: any,
+      action: PayloadAction<Episode>
+    ) => {
       const index = state.items.findIndex(
-        (favItem: any) => favItem.id === action.payload.id
+        (favItem: Episode) => favItem.id === action.payload.id
       );
       let newFavs = [...state.items];
 
@@ -30,10 +34,10 @@ export const favsSliceEpisodes = createSlice({
 });
 
 //Exporting actions (will allow us to dispatch actions)
-export const { addToFavorites, removeFromFavorites } =
+export const { addEpisodeToFavorites, removeEpisodeFromFavorites } =
   favsSliceEpisodes.actions;
 
 //Selectors - How we pull information from the global store slice
-export const selectItems = (state: any) => state.episodes.items;
+export const selectEpisodes = (state: any) => state.episodes.items;
 
 export default favsSliceEpisodes.reducer;

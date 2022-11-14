@@ -8,7 +8,10 @@ import { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSelected } from "@heroicons/react/20/solid";
 import { toast, Toaster } from "react-hot-toast";
-import { addToFavorites, removeFromFavorites } from "../../slices/favSlice";
+import {
+  addCharacterToFavorites,
+  removeCharacterFromFavorites,
+} from "../../slices/favSlice";
 
 const Index: NextPage<{ data: Character; episodes?: string[] }> = ({
   data,
@@ -18,22 +21,22 @@ const Index: NextPage<{ data: Character; episodes?: string[] }> = ({
   const favs = useSelector(selectItems);
 
   const [isFav, setFav] = useState<boolean>(
-    favs.some(({ name }: any) => name === data.name)
+    favs.some(({ name, id }: Character) => name === data.name && id)
   );
 
-  const addItemToFavorites = (favObj: object) => {
+  const addItemToFavorites = (favObj: Character) => {
     if (isFav) {
       setFav(false);
       toast.error("Removed From Favorites", {
         style: { boxShadow: "none", color: "white", backgroundColor: "red" },
       });
-      dispatch(removeFromFavorites(favObj));
+      dispatch(removeCharacterFromFavorites(favObj));
     } else {
       setFav(true);
       toast.success("Added To Favorites", {
         style: { boxShadow: "none", color: "white", backgroundColor: "green" },
       });
-      dispatch(addToFavorites(favObj));
+      dispatch(addCharacterToFavorites(favObj));
     }
   };
   return (

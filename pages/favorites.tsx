@@ -5,7 +5,7 @@ import { useState } from "react";
 import type { Character, Episode } from "../types/main";
 import { useSelector } from "react-redux";
 import { selectItems as selectCharacters } from "../slices/favSlice";
-import { selectItems as selectEpisodes } from "../slices/episodesSlice";
+import { selectEpisodes } from "../slices/episodesSlice";
 import CharacterCard from "../components/CharacterCard";
 import EpisodeCard from "../components/EpisodeCard";
 
@@ -27,7 +27,7 @@ const Favorites: NextPage = () => {
       </h1>
       {favCharacters.length > 0 ? (
         <div className="flex flex-wrap gap-3 mb-12 justify-center items-center md:ml-56 lg:ml-64">
-          {favCharacters?.map((i: Character) => (
+          {favCharacters?.map((i: Character, index: number) => (
             <CharacterCard key={i.id} data={i} />
           ))}
         </div>
@@ -41,7 +41,7 @@ const Favorites: NextPage = () => {
         <h1 className="text-center text-3xl font-bold py-2 md:ml-56 lg:ml-64">
           Episodes
         </h1>
-        {favEpisodes.length > 0 ? (
+        {favEpisodes?.length > 0 ? (
           <div className="flex flex-wrap gap-3  justify-center items-center md:ml-56 lg:ml-64">
             {favEpisodes?.map((i: Episode) => (
               <EpisodeCard key={i.id} data={i} />

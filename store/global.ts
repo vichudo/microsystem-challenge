@@ -9,8 +9,13 @@ const persistConfig = {
   storage,
 };
 
+const persistConfig2 = {
+  key: "root2",
+  storage,
+};
+
 const persistedFavsReducer = persistReducer(persistConfig, favReducer);
-const persistedEpisodes = persistReducer(persistConfig, episodesReducer);
+const persistedEpisodes = persistReducer(persistConfig2, episodesReducer);
 
 export const store = configureStore({
   reducer: {
