@@ -106,6 +106,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     `https://rickandmortyapi.com/api/character/${params?.id}`
   ).then((res) => res.json());
 
+  //This feature is commented because of rate limit API
   // const episodes = await Promise.all(
   //   data?.episode?.map(async (i: string) => {
   //     return await fetch(i).then((res) => res.json());

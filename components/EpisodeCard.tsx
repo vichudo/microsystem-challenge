@@ -35,19 +35,18 @@ const CharacterCard: FC<{ data: Episode }> = ({ data }) => {
   return (
     <>
       <Toaster />
-      <Link href={`/episode/${data.id}`}>
-        <div className="bg-green-700 rounded-md h-fit w-48 p-2 flex gap-2 text-white font-bold">
-          {" "}
-          <button onClick={() => addItemToFavorites(data)}>
-            {isFav ? (
-              <HeartSelected className="w-4" />
-            ) : (
-              <HeartIcon className="w-4 " />
-            )}
-          </button>
-          {data?.name}
-        </div>
-      </Link>
+
+      <div className="bg-green-700 rounded-md h-fit w-48 p-2 flex gap-2 text-white font-bold">
+        {" "}
+        <button onClick={() => addItemToFavorites(data)}>
+          {isFav ? (
+            <HeartSelected className="w-4" />
+          ) : (
+            <HeartIcon className="w-4 " />
+          )}
+        </button>
+        <Link href={`/episode/${data.id}`}>{data?.name}</Link>
+      </div>
     </>
   );
 };
